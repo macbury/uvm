@@ -1,6 +1,6 @@
 import Opcodes from './opcodes'
 
-export default class VM {
+export default class Vm {
   /**
   * Instruction pointer
   */
@@ -9,7 +9,7 @@ export default class VM {
   program = []
   halted = false
 
-  constructor(...instructions) {
+  constructor(instructions) {
     this.program = instructions
     this.ip = 0
     this.stack = []
@@ -19,32 +19,35 @@ export default class VM {
   * Run program execution until its halted
   */
   run() {
-    while(!this.halted) {
-      this.step()
-    }
+    while(this.step()) {}
+  }
+
+  canStep() {
+    return !this.halted && this.ip < this.program.length
   }
 
   /**
   * Step to next instruction
   */
   step() {
-    this._checkState(!this.halted)
+    this._checkState(!this.halted, "VM is halted!")
 
     let nextInstruction = this._getNextWordFromProgram("Should have a next instruction")
     this._decodeInstruction(nextInstruction)
+    return this.canStep()
   }
 
   _checkState(condition, message) {
-    if (condition) {
+    if (!condition) {
       this.halted = true
-      throw message
+      throw new Error(message)
     }
   }
 
   _getNextWordFromProgram(message) {
-    this._checkState(this.ip >= this.program.length)
+    this._checkState(this.ip < this.program.length, `End of program`)
     let nextWord = this.program[this.ip]
-    this.ip += 1;
+    this.ip += 1
     return nextWord
   }
 
