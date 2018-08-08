@@ -1,5 +1,9 @@
 import Opcodes from './opcodes'
 
+class VmError extends Error {
+
+}
+
 export default class Vm {
   /**
   * Instruction pointer
@@ -30,45 +34,29 @@ export default class Vm {
   * Step to next instruction
   */
   step() {
-    this._checkState(!this.halted, "VM is halted!")
+    this.checkState(!this.halted, "VM is halted!")
 
-    let nextInstruction = this._getNextWordFromProgram("Should have a next instruction")
-    this._decodeInstruction(nextInstruction)
-    return this.canStep()
-  }
-
-  _checkState(condition, message) {
-    if (!condition) {
+    let nextOpcode = this.next("End of program")
+    Opcodes.execute(nextOpcode, this)
+    if (this.canStep()) {
+      return true
+    } else {
       this.halted = true
-      throw new Error(message)
+      return false
     }
   }
 
-  _getNextWordFromProgram(message) {
-    this._checkState(this.ip < this.program.length, `End of program`)
+  checkState(condition, message) {
+    if (!condition) {
+      this.halted = true
+      throw new VmError(message)
+    }
+  }
+
+  next(message = "End of program") {
+    this.checkState(this.ip < this.program.length, message)
     let nextWord = this.program[this.ip]
     this.ip += 1
     return nextWord
-  }
-
-  _decodeInstruction(instruction) {
-    switch(instruction) {
-      default:
-        throw `Unknown instruction: ${instruction}`
-        this.halted = true
-      case Opcodes.Halt:
-        this.halted = true
-        break
-      case Opcodes.Push:
-        let value = this._getNextWordFromProgram("Should have the value after the PUSH instruction")
-        this.stack.push(value)
-      break
-      case Opcodes.Add:
-        this._checkState(this.stack.length >= 2, "There should be two values on stack to perform ADD")
-        let a = this.stack.pop()
-        let b = this.stack.pop()
-        this.stack.push(a + b)
-      break
-    }
   }
 }
