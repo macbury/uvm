@@ -47,6 +47,36 @@ describe('VirtualMachine', function() {
         expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Sub/)
       }))
     })
+
+    describe('Mul', function() {
+      it('with two numbers on stack', withVM([Opcodes.Mul], function(vm) {
+        vm.stack.set([2, 3])
+        expect(vm.step(), "to be final step").to.be.false
+        expect(vm.ip).to.eq(1)
+        expect(vm.halted, "to be halted").to.be.true
+        expect(vm.stack.toArray()).to.deep.eq([6])
+      }))
+
+      it('with less than two elements on stack', withVM([Opcodes.Mul], function(vm) {
+        vm.stack.set([2])
+        expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Mul/)
+      }))
+    })
+
+    describe('Div', function() {
+      it('with two numbers on stack', withVM([Opcodes.Div], function(vm) {
+        vm.stack.set([6, 3])
+        expect(vm.step(), "to be final step").to.be.false
+        expect(vm.ip).to.eq(1)
+        expect(vm.halted, "to be halted").to.be.true
+        expect(vm.stack.toArray()).to.deep.eq([2])
+      }))
+
+      it('with less than two elements on stack', withVM([Opcodes.Div], function(vm) {
+        vm.stack.set([2])
+        expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Div/)
+      }))
+    })
   })
 
   describe('simple program', function() {
