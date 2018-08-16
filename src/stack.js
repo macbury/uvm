@@ -10,6 +10,12 @@ class StackUnderflow extends Error {
   }
 }
 
+class InvalidStackType extends Error {
+  constructor(value, requiredType) {
+    super(`Expected ${value} to be type of ${requiredType}`)
+  }
+}
+
 export default class Stack {
   list = []
 
@@ -29,6 +35,15 @@ export default class Stack {
       throw new StackUnderflow()
     }
     return this.list.pop()
+  }
+
+  popNumber() {
+    let value = this.pop()
+    if (typeof(value) == 'number') {
+      return value
+    } else {
+      throw new InvalidStackType(value, 'number')
+    }
   }
 
   set(newList) {

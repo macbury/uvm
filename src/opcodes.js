@@ -42,29 +42,29 @@ Opcodes.register('Push', function(vm) {
 
 Opcodes.register('Add', function(vm) {
   assert(vm.stack.size() >= 2, "There should be two values on stack to perform Add")
-  let right = vm.stack.pop()
-  let left = vm.stack.pop()
+  let right = vm.stack.popNumber()
+  let left = vm.stack.popNumber()
   vm.stack.push(left + right)
 })
 
 Opcodes.register('Sub', function(vm) {
   assert(vm.stack.size() >= 2, "There should be two values on stack to perform Sub")
-  let right = vm.stack.pop()
-  let left = vm.stack.pop()
+  let right = vm.stack.popNumber()
+  let left = vm.stack.popNumber()
   vm.stack.push(left - right)
 })
 
 Opcodes.register('Mul', function(vm) {
   assert(vm.stack.size() >= 2, "There should be two values on stack to perform Mul")
-  let right = vm.stack.pop()
-  let left = vm.stack.pop()
+  let right = vm.stack.popNumber()
+  let left = vm.stack.popNumber()
   vm.stack.push(left * right)
 })
 
 Opcodes.register('Div', function(vm) {
   assert(vm.stack.size() >= 2, "There should be two values on stack to perform Div")
-  let right = vm.stack.pop()
-  let left = vm.stack.pop()
+  let right = vm.stack.popNumber()
+  let left = vm.stack.popNumber()
   vm.stack.push(left / right)
 })
 
