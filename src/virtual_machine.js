@@ -1,5 +1,6 @@
 import Opcodes from './opcodes'
 import Frame from './frame'
+import Stack from './stack'
 import { assert } from './errors'
 
 export class VirtualMachine {
@@ -14,7 +15,7 @@ export class VirtualMachine {
   constructor(instructions) {
     this.program = instructions
     this.ip = 0
-    this.stack = []
+    this.stack = new Stack()
     this.frame = new Frame()
   }
 

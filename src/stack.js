@@ -35,6 +35,10 @@ export default class Stack {
     this.list = newList
   }
 
+  size() {
+    return this.list.length
+  }
+
   toArray() {
     return this.list.slice()
   }
