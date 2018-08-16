@@ -1,7 +1,7 @@
-import VM from './vm'
+import { VirtualMachine } from './virtual_machine'
 import Opcodes from './opcodes'
 
-let vm = new VM(
+let vm = new VirtualMachine(
   Opcodes.Halt
 )
 

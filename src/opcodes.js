@@ -1,3 +1,5 @@
+import { assert } from './errors'
+
 class OpcodesBuilder {
   expressions = {}
   index = 0
@@ -17,9 +19,7 @@ class OpcodesBuilder {
   */
   resolve(opcode) {
     let name = this.indexToName[opcode]
-    if (name == null) {
-      throw `Unknown opcode: ${opcode}`
-    }
+    assert(name != null, `Unknown opcode: ${opcode}`)
     return name
   }
 
@@ -28,7 +28,7 @@ class OpcodesBuilder {
     this.expressions[name](vm)
   }
 }
-
+//https://andreabergia.com/stack-based-virtual-machines-4/
 const Opcodes = new OpcodesBuilder()
 
 Opcodes.register('Halt', function(vm) {
@@ -41,14 +41,14 @@ Opcodes.register('Push', function(vm) {
 })
 
 Opcodes.register('Add', function(vm) {
-  vm.checkState(vm.stack.length >= 2, "There should be two values on stack to perform Add")
+  assert(vm.stack.length >= 2, "There should be two values on stack to perform Add")
   let right = vm.stack.pop()
   let left = vm.stack.pop()
   vm.stack.push(left + right)
 })
 
 Opcodes.register('Sub', function(vm) {
-  vm.checkState(vm.stack.length >= 2, "There should be two values on stack to perform Sub")
+  assert(vm.stack.length >= 2, "There should be two values on stack to perform Sub")
   let right = vm.stack.pop()
   let left = vm.stack.pop()
   vm.stack.push(left - right)

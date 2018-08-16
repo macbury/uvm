@@ -2,7 +2,7 @@ import { expect } from 'chai'
 import { withVM } from './helpers'
 import Opcodes from '../src/opcodes'
 
-describe('VM', function() {
+describe('VirtualMachine', function() {
   describe('opcodes', function() {
     it('Halt', withVM([Opcodes.Halt], function(vm) {
       expect(vm.step()).to.be.false

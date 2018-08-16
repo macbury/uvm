@@ -1,8 +1,8 @@
-import VM from '../src/vm'
+import { VirtualMachine } from '../src/virtual_machine'
 
 export function withVM(instructions, callback) {
   return function(done) {
-    let vm = new VM(instructions)
+    let vm = new VirtualMachine(instructions)
     callback(vm)
     done()
   }

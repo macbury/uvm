@@ -1,10 +1,8 @@
 import Opcodes from './opcodes'
+import Frame from './frame'
+import { assert } from './errors'
 
-class VmError extends Error {
-
-}
-
-export default class Vm {
+export class VirtualMachine {
   /**
   * Instruction pointer
   */
@@ -17,6 +15,7 @@ export default class Vm {
     this.program = instructions
     this.ip = 0
     this.stack = []
+    this.frame = new Frame()
   }
 
   /**
@@ -34,7 +33,7 @@ export default class Vm {
   * Step to next instruction
   */
   step() {
-    this.checkState(!this.halted, "VM is halted!")
+    assert(!this.halted, "VM is halted!")
 
     let nextOpcode = this.next("End of program")
     Opcodes.execute(nextOpcode, this)
@@ -46,15 +45,8 @@ export default class Vm {
     }
   }
 
-  checkState(condition, message) {
-    if (!condition) {
-      this.halted = true
-      throw new VmError(message)
-    }
-  }
-
   next(message = "End of program") {
-    this.checkState(this.ip < this.program.length, message)
+    assert(this.ip < this.program.length, message)
     let nextWord = this.program[this.ip]
     this.ip += 1
     return nextWord
