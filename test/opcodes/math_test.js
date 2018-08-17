@@ -3,7 +3,7 @@ import { withVM } from '../helpers'
 import Opcodes from '../../src/opcodes'
 
 describe('VirtualMachine', function() {
-  describe('opcodes', function() {
+  describe('math', function() {
     it('Halt', withVM([Opcodes.Halt], function(vm) {
       expect(vm.step()).to.be.false
       expect(vm.ip).to.eq(1)

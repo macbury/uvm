@@ -1,35 +1,8 @@
-import { assert } from './errors'
+import OpcodesBuilder from './opcode_builder'
 
-class OpcodesBuilder {
-  expressions = {}
-  index = 0
-  indexToName = {}
-
-  register(name, expression) {
-    this.expressions[name] = expression
-    this[name] = this.index
-    this.indexToName[this.index] = name
-    this.index += 1
-  }
-
-  /**
-  * Resolve instruction name
-  * @param {Integer} opcode 
-  * @return {String} instruction name
-  */
-  resolve(opcode) {
-    let name = this.indexToName[opcode]
-    assert(name != null, `Unknown opcode: ${opcode}`)
-    return name
-  }
-
-  execute(opcode, vm) {
-    let name = this.resolve(opcode)
-    this.expressions[name](vm)
-  }
-}
 //https://andreabergia.com/stack-based-virtual-machines-4/
 const Opcodes = new OpcodesBuilder()
+export default Opcodes
 
 Opcodes.register('Halt', function(vm) {
   vm.halted = true
@@ -64,4 +37,7 @@ Opcodes.register('Div', function(vm) {
   vm.stack.push(left / right)
 })
 
-export default Opcodes
+Opcodes.register('Not', function(vm) {
+  let value = vm.stack.popBoolean()
+  vm.stack.push(!value)
+})

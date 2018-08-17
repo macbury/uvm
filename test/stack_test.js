@@ -12,7 +12,7 @@ describe('Stack', function () {
     it('throw stack overflow', function() {
       let stack = new Stack(2)
       stack.set([1,2])
-      expect(() => stack.push(2), "throw error about overflow").to.throw(/Stack overflow error/)
+      expect(() => stack.push(2)).to.throw(/Stack overflow error/)
     })
   })
   
@@ -25,7 +25,21 @@ describe('Stack', function () {
 
     it('throw stack underflow', function() {
       let stack = new Stack()
-      expect(() => stack.pop(), "throw error about underflow").to.throw(/Stack underflow error/)
+      expect(() => stack.pop()).to.throw(/Stack underflow error/)
+    })
+  })
+
+  describe('#popNumber', function() {
+    it('returns number', function() {
+      let stack = new Stack()
+      stack.set([1])
+      expect(stack.popNumber()).to.eq(1)
+    })
+
+    it('throws error for other type', function() {
+      let stack = new Stack()
+      stack.set(['1'])
+      expect(() => stack.popNumber()).to.throw(/Expected.+/)
     })
   })
 })
