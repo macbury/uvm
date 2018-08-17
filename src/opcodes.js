@@ -61,3 +61,13 @@ Opcodes.register('Or', function(vm) {
   let left = vm.stack.popBoolean()
   vm.stack.push(left || right)
 })
+
+Opcodes.register('Load', function(vm) {
+  let varNumber = vm.next("Should have the variable number after the Load instruction")
+  vm.stack.push(vm.frame.get(varNumber))
+})
+
+Opcodes.register('Store', function(vm) {
+  let varNumber = vm.next("Should have the variable number after the Store instruction")
+  vm.frame.set(varNumber, vm.stack.pop())
+})
