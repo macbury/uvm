@@ -47,3 +47,9 @@ Opcodes.register('And', function(vm) {
   let left = vm.stack.popBoolean()
   vm.stack.push(left && right)
 })
+
+Opcodes.register('Or', function(vm) {
+  let right = vm.stack.popBoolean()
+  let left = vm.stack.popBoolean()
+  vm.stack.push(left || right)
+})

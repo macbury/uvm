@@ -64,7 +64,7 @@ export default class Stack {
 
   popBoolean() {
     let value = this.popNumber()
-    return value === 1
+    return value !== 0
   }
 
   set(newList) {

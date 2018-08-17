@@ -42,4 +42,24 @@ describe('Stack', function () {
       expect(() => stack.popNumber()).to.throw(/Expected.+/)
     })
   })
+
+  describe('#popBoolean', function() {
+    it('returns true for 1', function() {
+      let stack = new Stack()
+      stack.set([1])
+      expect(stack.popBoolean()).to.eq(true)
+    })
+
+    it('returns true for anything other than 0', function() {
+      let stack = new Stack()
+      stack.set([123])
+      expect(stack.popBoolean()).to.eq(true)
+    })
+
+    it('returns false for 0', function() {
+      let stack = new Stack()
+      stack.set([0])
+      expect(stack.popBoolean()).to.eq(false)
+    })
+  })
 })
