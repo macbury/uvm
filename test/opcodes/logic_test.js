@@ -93,6 +93,90 @@ describe('VirtualMachine', function() {
         expect(vm.halted).to.be.true
         expect(vm.stack.toArray()).to.deep.eq([1])
       }))
+
+      it('push false if two values are different type', withVM([Opcodes.IsEq], function(vm) {
+        vm.stack.set(['19', 19])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([0])
+      }))
+
+      it('push true if strings are equal', withVM([Opcodes.IsEq], function(vm) {
+        vm.stack.set(['19', '19'])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([1])
+      }))
+
+      it('push false if two values are different', withVM([Opcodes.IsEq], function(vm) {
+        vm.stack.set([11, 19])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([0])
+      }))
+
+      it('requires two elements on stack', withVM([Opcodes.Or], function(vm) {
+        expect(() => vm.step()).to.throw(/Stack underflow error/)
+      }))
+    })
+
+    describe('IsGt', function() {
+      it('push true if left is greater than right', withVM([Opcodes.IsGt], function(vm) {
+        vm.stack.set([20, 19])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([1])
+      }))
+
+      it('push false if right is greater than left', withVM([Opcodes.IsGt], function(vm) {
+        vm.stack.set([19, 20])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([0])
+      }))
+
+      it('push false if two values are different type', withVM([Opcodes.IsGt], function(vm) {
+        vm.stack.set(['20', 19])
+        expect(() => vm.step()).to.throw(/Expected 20 to be type of number/)
+      }))
+
+      it('compares only numbers', withVM([Opcodes.IsGt], function(vm) {
+        vm.stack.set(['20', '19'])
+        expect(() => vm.step()).to.throw(/Expected 19 to be type of number/)
+      }))
+
+      it('requires two elements on stack', withVM([Opcodes.IsGt], function(vm) {
+        expect(() => vm.step()).to.throw(/Stack underflow error/)
+      }))
+    })
+
+    describe('IsGte', function() {
+      it('push true if left is equal right', withVM([Opcodes.IsGte], function(vm) {
+        vm.stack.set([20, 20])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([1])
+      }))
+
+      it('push true if left is greater than right', withVM([Opcodes.IsGte], function(vm) {
+        vm.stack.set([20, 19])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([1])
+      }))
+
+      it('push false if right is greater than left', withVM([Opcodes.IsGte], function(vm) {
+        vm.stack.set([19, 20])
+        expect(vm.step()).to.be.false
+        expect(vm.stack.toArray()).to.deep.eq([0])
+      }))
+
+      it('push false if two values are different type', withVM([Opcodes.IsGte], function(vm) {
+        vm.stack.set(['20', 19])
+        expect(() => vm.step()).to.throw(/Expected 20 to be type of number/)
+      }))
+
+      it('compares only numbers', withVM([Opcodes.IsGte], function(vm) {
+        vm.stack.set(['20', '19'])
+        expect(() => vm.step()).to.throw(/Expected 19 to be type of number/)
+      }))
+
+      it('requires two elements on stack', withVM([Opcodes.IsGte], function(vm) {
+        expect(() => vm.step()).to.throw(/Stack underflow error/)
+      }))
     })
   })
 })

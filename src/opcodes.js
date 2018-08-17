@@ -69,7 +69,19 @@ Opcodes.register('Or', function(vm) {
 Opcodes.register('IsEq', function(vm) {
   let right = vm.stack.pop()
   let left = vm.stack.pop()
-  vm.stack.push(sameType(left, right) && left == right)
+  vm.stack.push(sameType(left, right) && left === right)
+})
+
+Opcodes.register('IsGt', function(vm) {
+  let right = vm.stack.popNumber()
+  let left = vm.stack.popNumber()
+  vm.stack.push(sameType(left, right) && left > right)
+})
+
+Opcodes.register('IsGte', function(vm) {
+  let right = vm.stack.popNumber()
+  let left = vm.stack.popNumber()
+  vm.stack.push(sameType(left, right) && left >= right)
 })
 
 Opcodes.register('Load', function(vm) {
