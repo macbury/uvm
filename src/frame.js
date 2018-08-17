@@ -8,7 +8,7 @@ export default class Frame {
   variables = {}
 
   get(varNumber) {
-    if (this.variables[varNumber] === null) {
+    if (this.variables[varNumber] == null) {
       throw new UndefinedVariable()
     }
     return this.variables[varNumber]

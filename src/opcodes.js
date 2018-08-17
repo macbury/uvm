@@ -64,7 +64,8 @@ Opcodes.register('Or', function(vm) {
 
 Opcodes.register('Load', function(vm) {
   let varNumber = vm.next("Should have the variable number after the Load instruction")
-  vm.stack.push(vm.frame.get(varNumber))
+  let value = vm.frame.get(varNumber)
+  vm.stack.push(value)
 })
 
 Opcodes.register('Store', function(vm) {
