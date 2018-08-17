@@ -53,6 +53,13 @@ export default class Stack {
     return this.list.pop()
   }
 
+  peek() {
+    if (this.list.length <= 0) {
+      throw new StackUnderflow()
+    }
+    return this.list[this.size() - 1]
+  }
+
   popNumber() {
     let value = this.pop()
     if (typeof(value) == 'number') {

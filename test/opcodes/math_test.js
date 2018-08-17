@@ -4,20 +4,6 @@ import Opcodes from '../../src/opcodes'
 
 describe('VirtualMachine', function() {
   describe('math', function() {
-    it('Halt', withVM([Opcodes.Halt], function(vm) {
-      expect(vm.step()).to.be.false
-      expect(vm.ip).to.eq(1)
-      expect(vm.halted).to.be.true
-      expect(vm.stack.toArray()).to.be.empty
-    }))
-
-    it('Push', withVM([Opcodes.Push, 2], function(vm) {
-      expect(vm.step(), "to be final step").to.be.false
-      expect(vm.ip).to.eq(2)
-      expect(vm.halted, "to be halted").to.be.true
-      expect(vm.stack.toArray()).to.deep.eq([2])
-    }))
-
     describe('Add', function() {
       it('with two numbers on stack', withVM([Opcodes.Add], function(vm) {
         vm.stack.set([2, 3])

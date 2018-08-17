@@ -13,6 +13,14 @@ Opcodes.register('Push', function(vm) {
   vm.stack.push(value)
 })
 
+Opcodes.register('Pop', function(vm) {
+  vm.stack.pop()
+})
+
+Opcodes.register('Dup', function(vm) {
+  vm.stack.push(vm.stack.peek())
+})
+
 Opcodes.register('Add', function(vm) {
   let right = vm.stack.popNumber()
   let left = vm.stack.popNumber()
