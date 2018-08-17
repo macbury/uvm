@@ -29,7 +29,7 @@ describe('VirtualMachine', function() {
 
       it('with less than two elements on stack', withVM([Opcodes.Add], function(vm) {
         vm.stack.set([2])
-        expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Add/)
+        expect(() => vm.step(), "throw error about bad stack").to.throw(/Stack underflow error/)
       }))
     })
 
@@ -44,7 +44,7 @@ describe('VirtualMachine', function() {
 
       it('with less than two elements on stack', withVM([Opcodes.Sub], function(vm) {
         vm.stack.set([2])
-        expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Sub/)
+        expect(() => vm.step(), "throw error about bad stack").to.throw(/Stack underflow error/)
       }))
     })
 
@@ -59,7 +59,7 @@ describe('VirtualMachine', function() {
 
       it('with less than two elements on stack', withVM([Opcodes.Mul], function(vm) {
         vm.stack.set([2])
-        expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Mul/)
+        expect(() => vm.step(), "throw error about bad stack").to.throw(/Stack underflow error/)
       }))
     })
 
@@ -74,7 +74,7 @@ describe('VirtualMachine', function() {
 
       it('with less than two elements on stack', withVM([Opcodes.Div], function(vm) {
         vm.stack.set([2])
-        expect(() => vm.step(), "throw error about bad stack").to.throw(/There should be two values on stack to perform Div/)
+        expect(() => vm.step(), "throw error about bad stack").to.throw(/Stack underflow error/)
       }))
     })
   })
