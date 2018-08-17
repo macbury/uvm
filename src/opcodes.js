@@ -41,3 +41,9 @@ Opcodes.register('Not', function(vm) {
   let value = vm.stack.popBoolean()
   vm.stack.push(!value)
 })
+
+Opcodes.register('And', function(vm) {
+  let right = vm.stack.popBoolean()
+  let left = vm.stack.popBoolean()
+  vm.stack.push(left && right)
+})
