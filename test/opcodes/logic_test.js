@@ -84,5 +84,15 @@ describe('VirtualMachine', function() {
         expect(() => vm.step()).to.throw(/Expected yolo to be type of number/)
       }))
     })
+
+    describe('IsEq', function() {
+      it('push true if two numbers on stack are equal', withVM([Opcodes.IsEq], function(vm) {
+        vm.stack.set([19, 19])
+        expect(vm.step()).to.be.false
+        expect(vm.ip).to.eq(1)
+        expect(vm.halted).to.be.true
+        expect(vm.stack.toArray()).to.deep.eq([1])
+      }))
+    })
   })
 })

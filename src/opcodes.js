@@ -1,6 +1,10 @@
 import OpcodesBuilder from './opcode_builder'
 
-//https://andreabergia.com/stack-based-virtual-machines-4/
+
+function sameType(a, b) {
+  return typeof(a) == typeof(b)
+}
+
 const Opcodes = new OpcodesBuilder()
 export default Opcodes
 
@@ -60,6 +64,12 @@ Opcodes.register('Or', function(vm) {
   let right = vm.stack.popBoolean()
   let left = vm.stack.popBoolean()
   vm.stack.push(left || right)
+})
+
+Opcodes.register('IsEq', function(vm) {
+  let right = vm.stack.pop()
+  let left = vm.stack.pop()
+  vm.stack.push(sameType(left, right) && left == right)
 })
 
 Opcodes.register('Load', function(vm) {

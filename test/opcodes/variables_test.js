@@ -30,6 +30,10 @@ describe('VirtualMachine', function() {
         expect(vm.frame.get(10)).to.eq(666)
       }))
 
+      it('requires one element on stack', withVM([Opcodes.Store, 10], function(vm) {
+        expect(() => vm.step()).to.throw(/Stack underflow error/)
+      }))
+
       it('requires one operand', withVM([Opcodes.Store], function(vm) {
         expect(() => vm.step()).to.throw(/Should have the variable number after the Store instruction/)
       }))
