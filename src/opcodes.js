@@ -98,3 +98,11 @@ Opcodes.register('Jmp', function(vm) {
   let address = vm.next("Should have the instruction address after the Jmp instruction")
   vm.ip = address
 })
+
+Opcodes.register('Jif', function(vm) {
+  let left = vm.stack.popBoolean()
+  if (left) {
+    let address = vm.next("Should have the instruction address after the Jif instruction")
+    vm.ip = address
+  }
+})
