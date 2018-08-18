@@ -1,6 +1,5 @@
 import OpcodesBuilder from './opcode_builder'
 
-
 function sameType(a, b) {
   return typeof(a) == typeof(b)
 }
@@ -93,4 +92,9 @@ Opcodes.register('Load', function(vm) {
 Opcodes.register('Store', function(vm) {
   let varNumber = vm.next("Should have the variable number after the Store instruction")
   vm.frame.set(varNumber, vm.stack.pop())
+})
+
+Opcodes.register('Jmp', function(vm) {
+  let address = vm.next("Should have the instruction address after the Jmp instruction")
+  vm.ip = address
 })

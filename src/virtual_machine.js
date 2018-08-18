@@ -7,16 +7,26 @@ export class VirtualMachine {
   /**
   * Instruction pointer
   */
-  ip = 0
+  _ip = 0
   stack = []
   program = []
   halted = false
 
   constructor(instructions) {
     this.program = instructions
-    this.ip = 0
+    this._ip = 0
     this.stack = new Stack()
     this.frame = new Frame()
+  }
+
+  set ip(newIp) {
+    assert(typeof(newIp) == 'number', `Address ${newIp} is invalid`)
+    assert(newIp < this.program.length, `Address ${newIp} is outside of program`)
+    this._ip = newIp
+  }
+
+  get ip() {
+    return this._ip
   }
 
   /**
@@ -49,7 +59,7 @@ export class VirtualMachine {
   next(message = "End of program") {
     assert(this.ip < this.program.length, message)
     let nextWord = this.program[this.ip]
-    this.ip += 1
+    this._ip += 1
     return nextWord
   }
 }
