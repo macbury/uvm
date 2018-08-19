@@ -1,5 +1,5 @@
 import Opcodes from './opcodes'
-import Frame from './frame'
+import { Frames } from './frame'
 import Stack from './stack'
 import { assert } from './errors'
 
@@ -16,7 +16,8 @@ export class VirtualMachine {
     this.program = instructions
     this._ip = 0
     this.stack = new Stack()
-    this.frame = new Frame()
+    this.frames = new Frames()
+    this.frames.push(0) 
   }
 
   set ip(newIp) {
@@ -27,6 +28,10 @@ export class VirtualMachine {
 
   get ip() {
     return this._ip
+  }
+
+  get frame() {
+    return this.frames.current
   }
 
   /**

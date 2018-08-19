@@ -1,30 +1,4 @@
-class StackError extends Error {
-
-}
-
-class StackOverflow extends StackError {
-  constructor() {
-    super('Stack overflow error...')
-  }
-}
-
-class StackUnderflow extends StackError {
-  constructor() {
-    super('Stack underflow error...')
-  }
-}
-
-class InvalidStackType extends StackError {
-  constructor(value, requiredType) {
-    super(`Expected ${value} to be type of ${requiredType}`)
-  }
-}
-
-class InvalidPushType extends StackError {
-  constructor() {
-    super('You can only push number and string to stack')
-  }
-}
+import { StackOverflow, StackUnderflow, InvalidStackType, InvalidPushType } from './errors'
 
 export default class Stack {
   list = []

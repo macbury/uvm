@@ -106,3 +106,13 @@ Opcodes.register('Jif', function(vm) {
     vm.ip = address
   }
 })
+
+Opcodes.register('Call', function(vm) {
+  let address = vm.next("Should have the instruction address after the Call instruction")
+  vm.frames.push(vm.ip)
+  vm.ip = address
+})
+
+Opcodes.register('Ret', function(vm) {
+  vm.ip = vm.frames.pop()
+})

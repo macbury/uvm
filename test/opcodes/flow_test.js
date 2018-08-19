@@ -4,8 +4,9 @@ import Opcodes from '../../src/opcodes'
 
 describe('VirtualMachine', function() {
   describe('flow', function() {
-    it('Halt', withVM([Opcodes.Halt], function(vm) {
+    it('Halt', withVM([Opcodes.Halt, Opcodes.Push], function(vm) {
       expect(vm.step()).to.be.false
+      expect(() => vm.step()).to.throw(/VM is halted/)
       expect(vm.ip).to.eq(1)
       expect(vm.halted).to.be.true
       expect(vm.stack.toArray()).to.be.empty
