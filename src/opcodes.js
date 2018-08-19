@@ -101,8 +101,8 @@ Opcodes.register('Jmp', function(vm) {
 
 Opcodes.register('Jif', function(vm) {
   let left = vm.stack.popBoolean()
+  let address = vm.next("Should have the instruction address after the Jif instruction")
   if (left) {
-    let address = vm.next("Should have the instruction address after the Jif instruction")
     vm.ip = address
   }
 })

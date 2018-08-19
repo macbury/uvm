@@ -39,7 +39,6 @@ describe('VirtualMachine', function() {
 
       it('dont jump if false', withVM([Opcodes.Push, 0, Opcodes.Jif, 0], function(vm) {
         expect(vm.step()).to.be.true
-        expect(vm.step()).to.be.true
         expect(vm.step()).to.be.false
         expect(vm.halted).to.be.true
       }))
